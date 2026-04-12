@@ -9,6 +9,7 @@ dist/
 
 # Dependency folder 
 vendor/
+tmp/
 
 # Environment file 
 .env

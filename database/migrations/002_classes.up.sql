@@ -1,0 +1,6 @@
+CREATE TABLE classes (
+    id SERIAL PRIMARY KEY,
+    name TEXT NOT NULL,
+    section TEXT,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
