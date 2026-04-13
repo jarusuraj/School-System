@@ -20,7 +20,6 @@ func AuthGate() gin.HandlerFunc {
 			return
 		}
 
-	
 		if !strings.HasPrefix(authHeader, "Bearer ") {
 			c.JSON(http.StatusUnauthorized, gin.H{"error": "invalid token format"})
 			c.Abort()
@@ -39,7 +38,6 @@ func AuthGate() gin.HandlerFunc {
 			return
 		}
 
-		
 		claims, ok := token.Claims.(jwt.MapClaims)
 		if !ok {
 			c.JSON(http.StatusUnauthorized, gin.H{"error": "invalid claims"})
@@ -53,9 +51,22 @@ func AuthGate() gin.HandlerFunc {
 			c.Abort()
 			return
 		}
+		role, ok := claims["role"].(string)
+		if !ok {
+			c.JSON(http.StatusUnauthorized, gin.H{"error": "role not found in token"})
+			c.Abort()
+			return
+		}
+		user_id, ok := claims["user_id"].(float64)
+		if !ok {
+			c.JSON(http.StatusUnauthorized, gin.H{"error": "user_id not found in token"})
+			c.Abort()
+			return
+		}
 
-	
-		c.Set("email", email)
+		c.Set("email_id", email)
+		c.Set("user_id", int(user_id))
+		c.Set("role", role)
 
 		c.Next()
 	}

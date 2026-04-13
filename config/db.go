@@ -10,10 +10,9 @@ import (
 	"github.com/joho/godotenv"
 )
 
-
 var DB *pgxpool.Pool
-func ConnectDB() {
-	dsn := fmt.Sprintf("postgres://%s:%s@%s:%s/%s?sslmode=%s",
+func DBUrl() string{
+return fmt.Sprintf("postgres://%s:%s@%s:%s/%s?sslmode=%s",
 		os.Getenv("DB_USER"),
 		os.Getenv("DB_PASSWORD"),
 		os.Getenv("DB_HOST"),
@@ -21,7 +20,11 @@ func ConnectDB() {
 		os.Getenv("DB_NAME"),
 		os.Getenv("DB_SSLMODE"),
 	)
-	pool, err := pgxpool.New(context.Background(), dsn)
+
+}
+
+func ConnectDB() {
+	pool, err := pgxpool.New(context.Background(), DBUrl())
 	if err != nil {
 		log.Fatal("DB connection failed:", err)
 	}

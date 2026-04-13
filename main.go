@@ -12,6 +12,7 @@ import (
 func main() {
 	config.LoadEnv()
 	config.ConnectDB()
+	config.QueryExecution()
 	defer config.DB.Close()
 	router := gin.Default()
 	routes.Router(router)
