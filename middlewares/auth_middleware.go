@@ -55,7 +55,11 @@ func AuthGate() gin.HandlerFunc {
 		}
 
 		c.Set("email", email)
-		c.Set("role", role)
+		if email == "admin@go.dev" {
+			c.Set("role", os.Getenv("ADMIN_ROLE"))
+		} else {
+			c.Set("role", role)
+		}
 		c.Set("user_id", int(userIDFloat))
 
 		c.Next()

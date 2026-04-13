@@ -24,7 +24,7 @@ func Login(c *gin.Context) {
 	c.ShouldBindJSON(&login)
 	token, err := services.Login(login.Email, login.Password)
 	if err != nil {
-		c.JSON(401, gin.H{"message": "login failed." + err.Error()})
+		c.JSON(401, gin.H{"message": "login failed. " + err.Error()})
 		return
 	}
 	c.SetCookie(

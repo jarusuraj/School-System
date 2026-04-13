@@ -9,4 +9,5 @@ func Router(router *gin.Engine) {
 	AuthRoutes(router)
 	router.Use(middlewares.AuthGate())
 	Profile(router)
+	AddSubjects(router)
 }
