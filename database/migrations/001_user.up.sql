@@ -9,4 +9,4 @@ CREATE TABLE
         profile_image TEXT,
         phone TEXT,
         created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-    );
+    );  

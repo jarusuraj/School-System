@@ -10,12 +10,11 @@ import (
 	"github.com/jarusuraj/schoolsystem/routes"
 )
 
-func init() {
-	config.LoadEnv()
-	config.ConnectDB()
-	config.QueryExecution()
-}
 func main() {
+	config.LoadEnv()
+	if err:=config.ConnectDB();err!=nil{
+		log.Fatal(err)
+	}
 	defer config.DB.Close()
 	router := gin.Default()
 	router.Use(middlewares.CORS())

@@ -11,8 +11,9 @@ import (
 )
 
 var DB *pgxpool.Pool
-func DBUrl() string{
-return fmt.Sprintf("postgres://%s:%s@%s:%s/%s?sslmode=%s",
+
+func DBUrl() string {
+	return fmt.Sprintf("postgres://%s:%s@%s:%s/%s?sslmode=%s",
 		os.Getenv("DB_USER"),
 		os.Getenv("DB_PASSWORD"),
 		os.Getenv("DB_HOST"),
@@ -23,19 +24,21 @@ return fmt.Sprintf("postgres://%s:%s@%s:%s/%s?sslmode=%s",
 
 }
 
-func ConnectDB() {
+func ConnectDB() error {
 	pool, err := pgxpool.New(context.Background(), DBUrl())
 	if err != nil {
-		log.Fatal("DB connection failed:", err)
+		return fmt.Errorf("db connection failed: %w", err)
 	}
-	if err := pool.Ping(context.Background()); err != nil {
-		log.Fatal("DB ping failed", err)
-	}
-	log.Println("Connected to PostgreSQL")
-	DB=pool
-	log.Println("Database connected successfully")
-}
 
+	if err := pool.Ping(context.Background()); err != nil {
+		return fmt.Errorf("db ping failed: %w", err)
+	}
+
+	DB = pool
+	log.Println("Connected to To Database successfully")
+
+	return nil
+}
 
 func LoadEnv() {
 	err := godotenv.Load()
