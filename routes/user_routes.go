@@ -10,7 +10,7 @@ import (
 func Profile(r *gin.Engine) {
 	r.GET("/profile", middlewares.RateLimit(
 		models.RateLimitConfig{
-			Limit:  60.0 / 60.0,
+			Limit:  1,
 			Status: "Request Failed",
 			Body:   "API is at capacity, try again later.",
 		}), func(c *gin.Context) {

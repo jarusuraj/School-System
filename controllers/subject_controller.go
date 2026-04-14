@@ -7,15 +7,25 @@ import (
 )
 
 func AddSubjects(c *gin.Context) {
-	var subjects models.Subjects
-	if err := c.ShouldBindJSON(&subjects); err != nil {
-		c.JSON(400, gin.H{"error": err.Error()})
+	var req models.BulkCreateSubjectsRequest
+
+	if err := c.ShouldBindJSON(&req); err != nil {
+		c.JSON(400, gin.H{
+			"error": err.Error(),
+		})
 		return
 	}
-	err := services.AddSubjects(subjects.SubjectName)
+
+	result, err := services.AddSubjects(req.Subjects)
 	if err != nil {
-		c.JSON(500, gin.H{"error": err.Error()})
+		c.JSON(500, gin.H{
+			"error": err.Error(),
+		})
 		return
 	}
-	c.JSON(200, gin.H{"message": "subjects created"})
+
+	c.JSON(200, gin.H{
+		"message":  "subjects processed successfully",
+		"subjects": result,
+	})
 }

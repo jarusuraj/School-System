@@ -11,4 +11,5 @@ func Router(router *gin.Engine) {
 	Profile(router)
 	AddSubjects(router)
 	AddApprovalToUser(router)
+	Class(router)
 }
